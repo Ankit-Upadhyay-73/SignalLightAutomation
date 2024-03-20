@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Signal Lighting Representation
+    </title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" 
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    
+    <style>
+        
+        *{
+            font-family: 'Comic Sans MS';
+        }
+
+        .circle{
+            background: white;
+            border: 2px solid #565656;
+            border-radius: 60%;
+            width: 80px;
+            align-content: center;
+            height: 100px;
+        }
+
+        .lights > div{
+            display: inline-block;
+        }
+
+        .lights > div > input, .intervals > div > input{
+            width: 80px;
+        }
+
+        .main{
+            margin: 0 auto;
+            width: 50%;
+        }
+
+        div > p{
+            margin-top: 5rem;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="main">
+
+        <h1> Lights: </h1>
+
+        <div class="lights">
+
+            <div>
+                <span>sequence.</span>
+            </div>
+    
+            <div>
+                <div class="circle" id="l1"></div><br>
+                <input type="number" id="l1_s" /> <br />
+            </div>
+            
+            <div>
+                <div class="circle" id="l2"></div><br>
+                <input type="number" id="l2_s" /> <br />                
+            </div>
+
+            <div>
+                <div class="circle" id="l3"></div> <br>
+                <input type="number" id="l3_s" /> <br />
+            </div>
+            
+            <div>
+                <div class="circle" id="l4"></div><br>
+                <input type="number" id="l4_s" /> <br />
+            </div>
+        </div>
+        
+        <br>
+        <div class="intervals">
+            <div id="g_i">
+                <span> Green light interval: </span>
+                <input type="number" id="g_i_i"> <span>sec.</span>
+            </div>
+            <div id="y_i">
+                <span> Yellow light interval: </span>
+                <input type="number" id="y_i_i"> <span>sec.</span>
+            </div>
+        </div>
+
+        <br>
+        <div class="control_buttons">
+            <button id="start_button" value="Start"> Start </button>
+            <button id="stop_button" value="Stop"> Stop </button>
+        </div>
+
+    </div>
+
+    <script>
+        
+        $(document).ready(function(){    
+
+            let gC = 1, yC = 1;
+
+            let greenInterval;
+            let yellowInterval; 
+
+            function processSignalIndicator(){
+                greenInterval = setInterval(function(){
+                    // check for interval time here
+                    // if this is 2s then place a counter and check for 2sec 
+                    // check for all signals here
+                    
+
+                    if(gC > 4)
+                        gC = 1;
+
+                    for(let c= 1; c<=4; c++){    
+                        if($(`#l${gC}`).css("background-color") == "green"){
+                            $(`#l${gC}`).css("background-color", "white");
+                        }else if($(`#l${c}_s`).val() == gC){
+                            $(`#l${gC}`).css("background-color", "green");
+                            break;
+                        }
+                    }
+                    gC++;
+
+                },3000);
+    
+                yellowInterval= setInterval(function(){
+                    
+                    // check for interval time here
+                    // if this is 2s then place a counter and check for 2sec 
+                    if(yC > 4)
+                        yC = 1;
+                    for(let c= 1; c<=4; c++){    
+                        if($(`#l${yC}`).css("background-color") == "yellow"){
+                            $(`#l${yC}`).css("background-color", "white");
+                        }else if($(`#l${c}_s`).val() == yC){
+                            $(`#l${yC}`).css("background-color", "yellow");
+                            break;
+                        }
+                    }
+                    yC++;
+
+                }, 2000);
+            }
+
+
+            function onClearIntervals(){
+                for(let c= 1; c<=4; c++){
+                    $(`#l${c}`).css("background-color", "white");
+                }            
+            }
+
+            $("#start_button").on("click", function(){
+                processSignalIndicator();
+            });
+
+            $("#stop_button").on("click", function(){
+                clearInterval(greenInterval);
+                clearInterval(yellowInterval);
+                onClearIntervals();
+            });
+            
+        });
+
+    </script>
+
+</body>
+
+</html>
