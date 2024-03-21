@@ -1,0 +1,28 @@
+body {
+    font-family: 'Nunito', sans-serif;
+}
+.circle{
+    background: white;
+    border: 2px solid #565656;
+    border-radius: 60%;
+    width: 80px;
+    align-content: center;
+    height: 100px;
+}
+
+.lights > div{
+    display: inline-block;
+}
+
+.lights > div > input, .intervals > div > input{
+    width: 80px;
+}
+
+.main{
+    margin: 0 auto;
+    width: 50%;
+}
+
+div > p{
+    margin-top: 5rem;
+}
